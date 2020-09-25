@@ -1,6 +1,8 @@
 import {Display, testRender, render} from "./display.js"
+import {Keyboard, isKeyPressed} from "./keyboard.js"
 
 let Chip8Display = new Display(64, 32, 10);
+let Chip8Keyboard = new Keyboard();
 
 let loop;
 
@@ -26,7 +28,6 @@ const step = () => {
     if (elapsed > fpsInterval) {
         // Cycle the CPU. We'll come back to this later and fill it out.
     }
-
     loop = requestAnimationFrame(step);
 }
 
