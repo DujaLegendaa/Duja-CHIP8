@@ -1,0 +1,14 @@
+h1 {
+    text-align: center;
+}
+
+#canvas-container {
+    position: relative;
+}
+
+canvas {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    border: 5px solid green;
+}
