@@ -30,10 +30,9 @@ export class Keyboard {
     onKeyDown(event) {
         let Key = this.keyMap[event.which];
         this.keysPressed[Key] = true;
-        console.log(this.keysPressed);
 
-        if (this.onNextKeyPress !== null && key) {
-            this.onNextKeyPress(parseInt(key));
+        if (this.onNextKeyPress !== null && Key) {
+            this.onNextKeyPress(parseInt(Key));
             this.onNextKeyPress = null;
         }
     }

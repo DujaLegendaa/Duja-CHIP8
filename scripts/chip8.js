@@ -1,8 +1,8 @@
 import {Display, testRender, render} from "./display.js"
 import {Keyboard, isKeyPressed} from "./keyboard.js"
+import {CPU, loadSpritesIntoMemory, loadROM, cycle, testFunc} from "./cpu.js"
 
-let Chip8Display = new Display(64, 32, 10);
-let Chip8Keyboard = new Keyboard();
+let CHIP8 = new CPU(new Keyboard(), new Display(64, 32, 10), 10);
 
 let loop;
 
@@ -14,8 +14,9 @@ const init = () => {
     startTime = then;
 
     // TESTING CODE. REMOVE WHEN DONE TESTING.
-    testRender(Chip8Display);
-    render(Chip8Display);
+    loadSpritesIntoMemory(CHIP8);
+    loadROM("ADM.ch8", CHIP8);
+    //console.log(CHIP8);
     // END TESTING CODE
 
     loop = requestAnimationFrame(step);
@@ -26,9 +27,15 @@ const step = () => {
     elapsed = now - then;
 
     if (elapsed > fpsInterval) {
-        // Cycle the CPU. We'll come back to this later and fill it out.
+        cycle(CHIP8);
     }
     loop = requestAnimationFrame(step);
+}
+
+const printRegisters = (CHIP8) => {
+    for(let i = 0; i < CHIP8.registers.length; i++){
+        document.querySelector("#registers").textContent += "V"+i.toString(16)+": "+CHIP8.registers[i];
+    }
 }
 
 init();

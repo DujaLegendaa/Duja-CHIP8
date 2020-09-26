@@ -14,12 +14,12 @@ export class Display {
 }
 
 const wrapAround = (X, Y, Display) => {
-    if(Y >= Display.col)
+    if(Y > Display.col)
         Y -= Display.col;
     else if (Y < 0)
         Y += Display.col;
     
-    if (X >= Display.row)
+    if (X > Display.row)
         X -= Display.row;
     else if (X < 0)
         X += Display.row;
@@ -27,16 +27,16 @@ const wrapAround = (X, Y, Display) => {
     return [X, Y];
 }
 
-const setPixel = (X, Y, Display) => {
+export const setPixel = (X, Y, Display) => {
     let [NX, NY] = wrapAround(X, Y, Display);
     Display.pixelArr[NX * Display.col + NY] ^= 1;
 
     return Display.pixelArr;
 }
 
-const shouldWrite = (X, Y, Display) => {
+export const shouldWrite = (X, Y, Display) => {
     let [NX, NY] = wrapAround(X, Y, Display);
-    return !Display.pixelArr[NX * Display.row + NY];
+    return !Display.pixelArr[NX * Display.col + NY];
 }
 
 export const render = (Display) => {
@@ -54,14 +54,15 @@ const drawFrame = (Display, I = 0) => {
 
     if (Display.pixelArr[I] == 1){
         Display.ctx.fillStyle = "#000";
-        console.log(X, Y, I);
         Display.ctx.fillRect(X, Y, Display.scale, Display.scale);
     }
     drawFrame(Display, I + 1);
 }
 
-const fullClear = (Display) => {
-    return new Array(Display.row * Display.col);
+export const fullClear = (Display) => {
+    Display.ctx.clearRect(0, 0, Display.canvas.width, Display.canvas.height);
+    Display.pixelArr = new Array(Display.row * Display.col);
+    return Display;
 }
 
 export const testRender = (Display) => {
